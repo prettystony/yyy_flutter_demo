@@ -1,15 +1,26 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<Post> fetchPost() async {
-  final response =
-      await http.get('https://jsonplaceholder.typicode.com/posts/1');
-  final responseJson = json.decode(response.body);
+// Future<Post> fetchPost() async {
+//   final response =
+//       await http.get('https://jsonplaceholder.typicode.com/posts/1');
+//   final responseJson = json.decode(response.body);
 
-  return new Post.fromJson(responseJson);
+//   return new Post.fromJson(responseJson);
+// }
+
+Future<Post> fetchPost() async {
+  final response = await http.get(
+    'https://jsonplaceholder.typicode.com/posts/1',
+    headers: {HttpHeaders.AUTHORIZATION: "Basic your_api_token_here"},
+  );
+  final responseJson = json.decode(response.body); 
+  
+  return new Post.fromJson(responseJson); 
 }
 
 class Post {
@@ -63,3 +74,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
